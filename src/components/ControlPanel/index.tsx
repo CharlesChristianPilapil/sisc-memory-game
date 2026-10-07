@@ -1,17 +1,23 @@
+import { useState } from "react";
 import { RotateCw, Settings } from "lucide-react";
-
 import styles from "./ControlPanel.module.scss";
-
+import SettingsModal from "../SettingsModal";
 import { DIFFICULTIES } from "../../constants/difficulties";
 import { useGame } from "../../hooks/useGame";
 import { formatTime } from "../../utils/time";
 
 const ControlPanel = () => {
+    const [settingsOpen, setSettingsOpen] = useState(false);
     const {
         started,
         difficulty,
+        mode,
+        preferences,
         moves,
+        moveLimit,
+        remainingMoves,
         seconds,
+        remainingSeconds,
         bestScore,
         changeDifficulty,
         restart,
@@ -19,9 +25,24 @@ const ControlPanel = () => {
 
     const best = bestScore?.moves ?? "---";
 
-    const STATS = [
-        { label: "Moves", value: moves, hint: "Your turns" },
-        { label: "Time", value: formatTime(seconds), hint: "Starts on flip" },
+    const movesValue = preferences.hideMoves
+        ? "—"
+        : moveLimit !== null
+          ? `${moves} / ${moveLimit}`
+          : moves;
+
+    const movesHint =
+        remainingMoves !== null ? `${remainingMoves} left` : "Your turns";
+
+    const timeValue = preferences.hideTimer
+        ? "—"
+        : formatTime(remainingSeconds ?? seconds);
+
+    const timeHint = mode === "clock" ? "Time left" : "Starts on flip";
+
+    const stats = [
+        { label: "Moves", value: movesValue, hint: movesHint },
+        { label: "Time", value: timeValue, hint: timeHint },
         { label: "Best", value: best, hint: "Moves" },
     ];
 
@@ -29,9 +50,8 @@ const ControlPanel = () => {
         <div className={styles["control-panel"]}>
             <div>
                 <h2>Game Progress</h2>
-
                 <div className={styles["stat-wrapper"]}>
-                    {STATS.map(({ label, value, hint }) => (
+                    {stats.map(({ label, value, hint }) => (
                         <div key={label} className={styles.stat}>
                             <h3>{label}</h3>
                             <p>{value}</p>
@@ -39,7 +59,6 @@ const ControlPanel = () => {
                         </div>
                     ))}
                 </div>
-
                 <div className={styles.best}>
                     <div>
                         <h3>Best</h3>
@@ -53,7 +72,6 @@ const ControlPanel = () => {
 
             <div>
                 <h2>Difficulty</h2>
-
                 <div className={styles.difficulty}>
                     {DIFFICULTIES.map(({ id, label, cols, rows }) => (
                         <button
@@ -70,9 +88,8 @@ const ControlPanel = () => {
                         </button>
                     ))}
                 </div>
-
                 <div className={styles.actions}>
-                    <button type="button">
+                    <button type="button" onClick={() => setSettingsOpen(true)}>
                         <Settings size={16} />
                         Settings
                     </button>
@@ -82,6 +99,11 @@ const ControlPanel = () => {
                     </button>
                 </div>
             </div>
+
+            <SettingsModal
+                open={settingsOpen}
+                onClose={() => setSettingsOpen(false)}
+            />
         </div>
     );
 };

@@ -67,26 +67,29 @@ $radius: 12px;
         rgb(255 255 255 / 18%),
         rgb(0 0 0 / 18%)
     );
-}
 
-.orbit {
-    position: absolute;
-    border: 1px solid rgb(255 255 255 / 20%);
-    border-radius: 50%;
-}
+    &::before,
+    &::after {
+        content: "";
+        position: absolute;
+        border: 1px solid rgb(255 255 255 / 20%);
+        border-radius: 50%;
+        pointer-events: none;
+    }
 
-.orbit-one {
-    width: 90%;
-    height: 90%;
-    top: -30%;
-    left: -30%;
-}
+    &::before {
+        width: 90%;
+        height: 90%;
+        top: -30%;
+        left: -30%;
+    }
 
-.orbit-two {
-    width: 70%;
-    height: 70%;
-    right: -20%;
-    bottom: -20%;
+    &::after {
+        width: 70%;
+        height: 70%;
+        right: -20%;
+        bottom: -20%;
+    }
 }
 
 .logo {

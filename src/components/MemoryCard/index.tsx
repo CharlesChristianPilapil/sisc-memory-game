@@ -1,6 +1,6 @@
 import styles from "./MemoryCard.module.scss";
-import { CARD_ICONS, ICON_NAMES, type IconName } from "../../utils/icon";
 import { Boxes, Check } from "lucide-react";
+import { CARD_ICONS, ICON_NAMES, type IconName } from "../../utils/icon";
 
 type MemoryCardProps = {
     icon: IconName;
@@ -36,6 +36,7 @@ const MemoryCard = ({
 
     return (
         <button
+            type="button"
             className={className}
             onClick={onFlip}
             disabled={matched}
@@ -43,28 +44,18 @@ const MemoryCard = ({
         >
             <span className={styles.inner}>
                 <span className={`${styles.face} ${styles.back}`}>
-                    <span
-                        className={`${styles.orbit} ${styles["orbit-one"]}`}
-                    />
-                    <span
-                        className={`${styles.orbit} ${styles["orbit-two"]}`}
-                    />
                     <Boxes className={styles.logo} aria-hidden="true" />
-                    <span className={styles.number}>
-                        {String(index + 1).padStart(2, "0")}
-                    </span>
+                    {numbered && (
+                        <span className={styles.number}>
+                            {String(index + 1).padStart(2, "0")}
+                        </span>
+                    )}
                 </span>
 
                 <span
                     className={`${styles.face} ${styles.front} ${styles[`tone-${iconIndex % 4}`]}`}
                 >
-                    {numbered ? (
-                        <span className={styles["front-number"]}>
-                            {iconIndex + 1}
-                        </span>
-                    ) : (
-                        <Icon strokeWidth={1.75} aria-hidden="true" />
-                    )}
+                    <Icon strokeWidth={1.75} aria-hidden="true" />
                     {matched && (
                         <span className={styles.check}>
                             <Check size={12} strokeWidth={3} />

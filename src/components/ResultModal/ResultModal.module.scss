@@ -1,0 +1,256 @@
+@use "../../styles/variables" as *;
+
+.dialog {
+    width: min(420px, calc(100% - 1.5rem));
+    max-width: none;
+    max-height: 90dvh;
+    margin: auto;
+    padding: 0;
+    border: 1px solid $border;
+    border-radius: 16px;
+    background-color: $surface;
+    color: $text;
+    overflow: hidden;
+
+    &::backdrop {
+        background: rgb(0 0 0 / 45%);
+        backdrop-filter: blur(2px);
+    }
+}
+
+.body {
+    position: relative;
+    display: grid;
+    justify-items: center;
+    gap: 0.75rem;
+    max-height: 90dvh;
+    padding: 1.5rem 1.25rem 1.25rem;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    text-align: center;
+
+    h2 {
+        font-size: x-large;
+    }
+}
+
+.close {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    display: grid;
+    place-items: center;
+    width: 32px;
+    height: 32px;
+    border: 1px solid $border;
+    border-radius: 50%;
+    background: transparent;
+    color: $text-muted;
+    cursor: pointer;
+
+    &::after {
+        content: "";
+        position: absolute;
+        inset: -6px;
+    }
+
+    &:hover {
+        background-color: $background;
+        color: $text;
+    }
+
+    &:focus-visible {
+        outline: 2px solid $primary;
+        outline-offset: 2px;
+    }
+}
+
+.mark {
+    display: grid;
+    place-items: center;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+
+    svg {
+        width: 50%;
+        height: 50%;
+    }
+}
+
+.success {
+    background-color: $primary;
+    color: white;
+}
+
+.failure {
+    border: 1px solid $border;
+    background-color: $background;
+    color: $text-muted;
+}
+
+.eyebrow {
+    color: $primary;
+    font-size: x-small;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.copy {
+    color: $text-muted;
+    font-size: small;
+}
+
+.stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(5.5rem, 1fr));
+    gap: 8px;
+    width: 100%;
+    margin: 0;
+
+    div {
+        padding: 10px;
+        border: 1px solid $border;
+        border-radius: 10px;
+    }
+
+    dt {
+        color: $text-muted;
+        font-size: x-small;
+    }
+
+    dd {
+        margin: 0;
+        font-size: large;
+        font-weight: 600;
+        font-variant-numeric: tabular-nums;
+    }
+}
+
+.standing {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid $border;
+    border-radius: 12px;
+    font-size: small;
+}
+
+.best {
+    border-color: $primary;
+    background-color: $background;
+
+    svg {
+        color: $primary;
+    }
+}
+
+.rankings {
+    display: grid;
+    gap: 0.5rem;
+    width: 100%;
+    text-align: left;
+
+    h3 {
+        font-size: small;
+        font-weight: 600;
+    }
+
+    ol {
+        display: grid;
+        gap: 6px;
+        max-height: min(30dvh, 14rem);
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        overflow-y: auto;
+        overscroll-behavior: contain;
+    }
+
+    li {
+        display: grid;
+        grid-template-columns: 2rem minmax(0, 1fr) minmax(0, 1fr) auto;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 12px;
+        border: 1px solid $border;
+        border-radius: 10px;
+        font-size: small;
+        font-variant-numeric: tabular-nums;
+    }
+}
+
+.rank {
+    display: grid;
+    place-items: center;
+    width: 28px;
+    height: 28px;
+    color: $text-muted;
+    font-size: x-small;
+    font-weight: 600;
+
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+    }
+}
+
+.you {
+    border-color: $primary !important;
+    background-color: $background;
+    font-weight: 600;
+}
+
+.badge {
+    padding: 2px 8px;
+    border-radius: 999px;
+    background-color: $primary;
+    color: white;
+    font-size: x-small;
+    font-style: normal;
+    font-weight: 600;
+}
+
+.your-score {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 4px 12px;
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px dashed $primary;
+    border-radius: 10px;
+    font-size: small;
+    font-variant-numeric: tabular-nums;
+
+    span {
+        color: $text-muted;
+    }
+}
+
+.play {
+    width: 100%;
+    min-height: 44px;
+    margin-top: 0.25rem;
+    border: none;
+    border-radius: 12px;
+    background-color: $text;
+    color: $background;
+    font-size: small;
+    cursor: pointer;
+
+    &:hover {
+        background-color: $text-muted;
+    }
+
+    &:focus-visible {
+        outline: 2px solid $primary;
+        outline-offset: 2px;
+    }
+}

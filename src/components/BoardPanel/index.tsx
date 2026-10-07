@@ -8,6 +8,7 @@ const BoardPanel = () => {
         gameId,
         flipped,
         config,
+        preferences,
         flipCard,
         message,
         matchedPairs,
@@ -33,6 +34,8 @@ const BoardPanel = () => {
                         index={i}
                         flipped={flipped.includes(card.id)}
                         matched={card.matched}
+                        numbered={preferences.numbered}
+                        hideMatched={preferences.hideMatched}
                         onFlip={() => flipCard(card.id)}
                     />
                 ))}
