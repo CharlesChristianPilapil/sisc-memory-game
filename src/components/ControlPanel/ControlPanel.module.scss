@@ -23,6 +23,9 @@
 
     @include desktop {
         grid-template-columns: 1fr;
+        height: fit-content;
+        position: sticky;
+        top: 1rem;
     }
 }
 
