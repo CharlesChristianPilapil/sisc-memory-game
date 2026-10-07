@@ -2,21 +2,26 @@
 
 A responsive memory card-matching game built with React, TypeScript, Vite, and SCSS Modules.
 
-The goal is to match all card pairs while tracking moves and time. The game also includes multiple difficulty levels, configurable game modes, persistent rankings, and responsive layouts.
+The goal is to match all card pairs while tracking moves and time. The game includes multiple difficulty levels, configurable game modes, persistent rankings, game settings, and responsive layouts.
+
+## Live Demo
+
+**[SISC Memory Match](https://cc-sisc-memory-game.vercel.app/)**
 
 ## Features
 
 - Memory matching game with multiple difficulty levels
 - Classic, Limited Moves, and Beat the Clock modes
 - Move counter and game timer
-- Best-score and leaderboard tracking using localStorage
-- Up to 5 saved scores per difficulty, configurable through `MAX_BEST_SCORES`
+- Persistent leaderboard using `localStorage`
+- Configurable number of saved leaderboard scores
 - Result modal for successful and failed games
-- Top rankings with trophy assets for the first three places
-- Settings for player preferences and game behavior
+- Rankings with trophy assets for the first three places
+- Game settings for player and board preferences
 - Responsive desktop, tablet, and mobile layouts
 - Keyboard-friendly interactive controls
 - SCSS Modules with shared variables and mixins
+- Custom 404 / Not Found page
 
 ## Tech Stack
 
@@ -24,8 +29,8 @@ The goal is to match all card pairs while tracking moves and time. The game also
 - TypeScript
 - Vite
 - SCSS Modules
-- Lucide React
-- Browser localStorage
+- Lucide React for icons
+- `localStorage` for persistent scores
 
 ## Folder Structure
 
@@ -35,6 +40,7 @@ src/
 │   ├── bronze-trophy.png
 │   ├── gold-trophy.png
 │   ├── hero.png
+│   ├── not-found.png
 │   └── silver-trophy.png
 │
 ├── components/
@@ -42,6 +48,9 @@ src/
 │   ├── ControlPanel/
 │   ├── Header/
 │   ├── MemoryCard/
+│   ├── NotFound/
+│   │   ├── index.tsx
+│   │   └── NotFound.module.scss
 │   ├── ResultModal/
 │   │   ├── RankingList.tsx
 │   │   ├── ResultStats.tsx
@@ -76,8 +85,8 @@ src/
 │   ├── icon.ts
 │   └── time.ts
 │
-├── App.tsx
 ├── App.module.scss
+├── App.tsx
 └── main.tsx
 ```
 
@@ -93,17 +102,18 @@ The `components` directory contains the main UI parts of the game.
 - **MemoryCard** — Individual interactive memory cards
 - **ResultModal** — Displays success/failure results and rankings
 - **SettingsModal** — Game mode and board preference controls
+- **NotFound** — Displays the 404 page for unsupported paths
 
 ### Context and Hooks
 
 The game state is shared through the Game context.
 
 - `GameProvider` provides game state to the application.
-- `useGame` exposes the game state and actions to components.
+- `useGame` exposes game state and actions to components.
 - `useMemoryGame` contains the core memory game logic.
 - `useSettings` handles game settings.
 
-This keeps the game logic separate from the presentation components.
+This keeps the game logic separate from presentation components.
 
 ### Constants
 
@@ -128,13 +138,13 @@ Shared Sass resources are kept in:
 
 ```text
 src/styles/
-├── _variables.scss
 ├── _mixins.scss
+├── _variables.scss
 └── globals.scss
 ```
 
-- `_variables.scss` contains shared design values such as colors, spacing, breakpoints, and shadows.
-- `_mixins.scss` contains reusable patterns such as responsive breakpoints and the main container.
+- `_variables.scss` contains shared values such as colors, breakpoints, and shadows.
+- `_mixins.scss` contains reusable patterns such as the responsive container and breakpoints.
 - `globals.scss` contains global/base styles.
 
 Component-specific styles are colocated with their components using `.module.scss`.
@@ -152,9 +162,40 @@ Component-specific styles are colocated with their components using `.module.scs
 9. Successful games can be saved to the leaderboard.
 10. The result modal displays the final result and rankings.
 
+## Game Modes
+
+### Classic
+
+Find all pairs at your own pace with unlimited time and moves.
+
+### Limited Moves
+
+Find all pairs before reaching the configured move limit.
+
+### Beat the Clock
+
+Find all pairs before the configured timer expires.
+
+## Game Settings
+
+Players can customize the game through the Settings modal.
+
+Available settings include:
+
+- Player mode
+- Classroom mode
+- Numbered cards
+- Sound
+- Hide matched cards
+- Hide timer
+- Hide moves
+- Game mode
+
+Settings can be reset to their default values.
+
 ## Leaderboards
 
-Scores are stored in browser `localStorage`.
+Successful game results are stored in browser `localStorage`.
 
 The leaderboard uses:
 
@@ -168,7 +209,34 @@ Scores are ranked by:
 1. Fewest moves
 2. Fastest time when moves are equal
 
-The number of stored and displayed rankings is controlled by `MAX_BEST_SCORES`.
+The number of saved and displayed rankings is controlled by `MAX_BEST_SCORES`.
+
+The result modal displays the configured number of rankings and highlights the player's result when it appears on the leaderboard.
+
+The first three rankings use the provided gold, silver, and bronze trophy assets.
+
+## Error Handling
+
+The application includes a custom Not Found page for unsupported paths.
+
+When the current path is not `/`, the application renders the `NotFound` component instead of the game.
+
+The page includes:
+
+- 404 status
+- Not Found illustration
+- Friendly error message
+- Link back to the game
+
+## Responsive Design
+
+The interface follows a mobile-first approach and supports:
+
+- Mobile
+- Tablet
+- Desktop
+
+The layout is designed to work down to a minimum viewport width of 320px.
 
 ## Running the Project
 
@@ -196,8 +264,14 @@ Preview the production build:
 npm run preview
 ```
 
+## Deployment
+
+The application is deployed on Vercel.
+
+**Live Demo:** https://cc-sisc-memory-game.vercel.app/
+
 ## Project Notes
 
-The project follows a mobile-first approach with responsive layouts for mobile, tablet, and desktop.
+The project focuses on clear component separation, reusable game logic, responsive design, accessible interactions, and scoped SCSS styling.
 
-Game-specific styling is kept inside component SCSS Modules, while shared Sass variables and mixins are centralized to reduce duplication and keep the styling consistent.
+Game-specific styles are kept inside component SCSS Modules, while shared Sass variables and mixins are centralized to minimize duplication.

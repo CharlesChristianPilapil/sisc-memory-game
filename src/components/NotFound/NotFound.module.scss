@@ -1,0 +1,35 @@
+@use "../../styles/mixins" as *;
+@use "../../styles/variables" as *;
+
+.not-found {
+    display: grid;
+    min-height: 100vh;
+    place-items: center;
+
+    div {
+        gap: 8px;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+
+        img {
+            width: 120px;
+        }
+
+        h1 {
+            font-size: xx-large;
+        }
+
+        a {
+            @include button;
+
+            color: $background;
+            background-color: $text;
+            text-decoration: none;
+
+            &:hover {
+                background-color: $text-muted;
+            }
+        }
+    }
+}
