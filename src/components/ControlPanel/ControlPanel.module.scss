@@ -1,5 +1,182 @@
 @use "../../styles/mixins" as *;
+@use "../../styles/variables" as *;
+
+@mixin muted-label($size) {
+    color: $text-muted;
+    font-size: $size;
+    font-weight: 500;
+}
 
 .control-panel {
     @include card;
+
+    gap: 1rem;
+    display: grid;
+
+    h2 {
+        font-size: small;
+    }
+
+    @include tablet {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    @include desktop {
+        grid-template-columns: 1fr;
+    }
+}
+
+.divider {
+    margin: 0;
+    border: none;
+    border-top: 1px solid $border;
+
+    @include tablet {
+        display: none;
+    }
+
+    @include desktop {
+        display: block;
+    }
+}
+
+.stat-wrapper {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
+
+.stat {
+    border: 1px solid $border;
+    border-radius: 8px;
+    padding: 8px;
+    flex: 1;
+
+    h3 {
+        @include muted-label(x-small);
+    }
+
+    p:nth-of-type(1) {
+        font-size: large;
+        font-weight: 500;
+    }
+
+    p:nth-of-type(2) {
+        display: none;
+
+        @include mobile {
+            display: block;
+            color: $text-muted;
+            font-size: x-small;
+        }
+    }
+
+    &:nth-of-type(3) {
+        @include tablet {
+            display: none;
+        }
+    }
+}
+
+.best {
+    display: none;
+    margin-top: 0.5rem;
+
+    @include tablet {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 8px;
+        border: 1px solid $border;
+        border-radius: 8px;
+
+        h3 {
+            @include muted-label(small);
+        }
+
+        p {
+            font-size: x-small;
+        }
+
+        strong {
+            color: $primary;
+            font-size: 1.5rem;
+        }
+    }
+}
+
+.difficulty {
+    margin-top: 1rem;
+    color: $text-muted;
+    background-color: $background;
+    padding: 4px;
+    border-radius: 8px;
+    display: grid;
+    gap: 4px;
+    grid-template-columns: repeat(3, 1fr);
+
+    strong {
+        display: block;
+        font-weight: 500;
+        font-size: small;
+    }
+
+    span {
+        display: block;
+        font-size: x-small;
+    }
+
+    button {
+        padding: 8px;
+        border-radius: 8px;
+        background-color: transparent;
+        border: 1px solid $border;
+        cursor: pointer;
+
+        &:hover:not(:disabled) {
+            background-color: $surface;
+        }
+
+        &.active {
+            background-color: $primary;
+        }
+
+        &:disabled {
+            color: $surface;
+            cursor: default;
+        }
+    }
+}
+
+.actions {
+    margin-top: 1rem;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+
+    button {
+        font-size: small;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        padding: 10px 12px;
+        border-radius: 12px;
+        background-color: transparent;
+        border: 1px solid $border;
+        cursor: pointer;
+
+        &:hover {
+            background-color: $background;
+        }
+
+        &:nth-of-type(2) {
+            color: $background;
+            background-color: $text;
+
+            &:hover {
+                background-color: $text-muted;
+            }
+        }
+    }
 }

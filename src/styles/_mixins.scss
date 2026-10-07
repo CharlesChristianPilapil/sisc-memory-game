@@ -16,8 +16,10 @@
 
 @mixin card {
     padding: 8px;
+    border: 1px solid $border;
     border-radius: 8px;
     background-color: $surface;
+    box-shadow: $shadow;
 }
 
 @mixin mobile {
