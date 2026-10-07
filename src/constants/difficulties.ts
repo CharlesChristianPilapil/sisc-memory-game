@@ -1,6 +1,6 @@
 export const DIFFICULTIES = [
-    { id: "easy", label: "Easy", cols: 2, rows: 2 },
-    { id: "medium", label: "Medium", cols: 4, rows: 4 },
+    { id: "easy", label: "Easy", cols: 4, rows: 4 },
+    { id: "medium", label: "Medium", cols: 5, rows: 4 },
     { id: "hard", label: "Hard", cols: 6, rows: 6 },
 ] as const;
 

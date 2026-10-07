@@ -130,11 +130,9 @@
     }
 
     button {
-        padding: 8px;
-        border-radius: 8px;
+        @include button;
+
         background-color: transparent;
-        border: 1px solid $border;
-        cursor: pointer;
 
         &:hover:not(:disabled) {
             background-color: $surface;
@@ -158,16 +156,13 @@
     gap: 8px;
 
     button {
-        font-size: small;
+        @include button;
+
+        gap: 8px;
         display: flex;
         align-items: center;
         justify-content: center;
-        gap: 8px;
-        padding: 10px 12px;
-        border-radius: 12px;
         background-color: transparent;
-        border: 1px solid $border;
-        cursor: pointer;
 
         &:hover {
             background-color: $background;

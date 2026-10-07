@@ -260,13 +260,10 @@
 }
 
 .done {
-    padding: 10px 20px;
-    border: none;
-    border-radius: 12px;
+    @include button;
+
     background-color: $text;
     color: $background;
-    font-size: small;
-    cursor: pointer;
 
     &:hover {
         background-color: $text-muted;
