@@ -1,4 +1,4 @@
-# SISC Memory Match
+# SISC Memory Game
 
 A responsive memory card-matching game built with React, TypeScript, Vite, and SCSS Modules.
 
