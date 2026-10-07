@@ -1,42 +1,39 @@
-import { useState } from "react";
 import MemoryCard from "../MemoryCard";
 import styles from "./BoardPanel.module.scss";
-import { createDeck } from "../../utils/deck";
-
-const COLS = 6;
-const ROWS = 6;
-const PAIRS = (COLS * ROWS) / 2;
+import { useGame } from "../../hooks/useGame";
 
 const BoardPanel = () => {
-    const [cards] = useState(() => createDeck(PAIRS));
-    const [flipped, setFlipped] = useState<number[]>([]);
-
-    const handleFlip = (id: number) => {
-        setFlipped((current) =>
-            current.includes(id) ? current : [...current, id],
-        );
-    };
+    const {
+        cards,
+        gameId,
+        flipped,
+        config,
+        flipCard,
+        message,
+        matchedPairs,
+        totalPairs,
+    } = useGame();
 
     return (
         <div className={styles["board-panel"]}>
             <div className={styles.head}>
-                <h2>Medium game ready — find 8 pairs</h2>
-                <p> 0 of 2 pairs </p>
+                <h2>{message}</h2>
+                <p>
+                    {matchedPairs} of {totalPairs} pairs
+                </p>
             </div>
             <div
                 className={styles.grid}
-                style={{ "--cols": COLS } as React.CSSProperties}
+                style={{ "--cols": config.cols } as React.CSSProperties}
             >
                 {cards.map((card, i) => (
                     <MemoryCard
-                        key={card.id}
+                        key={`${gameId}-${card.id}`}
                         icon={card.icon}
                         index={i}
                         flipped={flipped.includes(card.id)}
                         matched={card.matched}
-                        numbered={false}
-                        hideMatched={false}
-                        onFlip={() => handleFlip(card.id)}
+                        onFlip={() => flipCard(card.id)}
                     />
                 ))}
             </div>

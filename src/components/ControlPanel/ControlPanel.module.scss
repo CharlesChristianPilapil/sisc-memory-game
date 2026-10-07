@@ -177,8 +177,14 @@
             color: $background;
             background-color: $text;
 
-            &:hover {
+            &:hover:not(:disabled) {
                 background-color: $text-muted;
+            }
+
+            &:disabled {
+                background-color: $text-muted;
+                border-color: $border;
+                cursor: not-allowed;
             }
         }
     }

@@ -1,28 +1,35 @@
-import { useState } from "react";
-import styles from "./ControlPanel.module.scss";
 import { RotateCw, Settings } from "lucide-react";
 
-const DIFFICULTIES = [
-    { id: "easy", label: "Easy", size: "4 x 4" },
-    { id: "medium", label: "Medium", size: "5 x 5" },
-    { id: "hard", label: "Hard", size: "6 x 6" },
-] as const;
+import styles from "./ControlPanel.module.scss";
 
-const STATS = [
-    { label: "Moves", value: "0", hint: "Your turns" },
-    { label: "Time", value: "00.00", hint: "Starts on flip" },
-    { label: "Best", value: "---", hint: "Moves" },
-] as const;
-
-type Difficulty = (typeof DIFFICULTIES)[number]["id"];
+import { DIFFICULTIES } from "../../constants/difficulties";
+import { useGame } from "../../hooks/useGame";
+import { formatTime } from "../../utils/time";
 
 const ControlPanel = () => {
-    const [difficulty, setDifficulty] = useState<Difficulty>("easy");
+    const {
+        started,
+        difficulty,
+        moves,
+        seconds,
+        bestScore,
+        changeDifficulty,
+        restart,
+    } = useGame();
+
+    const best = bestScore?.moves ?? "---";
+
+    const STATS = [
+        { label: "Moves", value: moves, hint: "Your turns" },
+        { label: "Time", value: formatTime(seconds), hint: "Starts on flip" },
+        { label: "Best", value: best, hint: "Moves" },
+    ];
 
     return (
         <div className={styles["control-panel"]}>
             <div>
                 <h2>Game Progress</h2>
+
                 <div className={styles["stat-wrapper"]}>
                     {STATS.map(({ label, value, hint }) => (
                         <div key={label} className={styles.stat}>
@@ -32,37 +39,44 @@ const ControlPanel = () => {
                         </div>
                     ))}
                 </div>
+
                 <div className={styles.best}>
                     <div>
                         <h3>Best</h3>
                         <p>Moves</p>
                     </div>
-                    <strong>---</strong>
+                    <strong>{best}</strong>
                 </div>
             </div>
+
             <hr className={styles.divider} />
+
             <div>
                 <h2>Difficulty</h2>
+
                 <div className={styles.difficulty}>
-                    {DIFFICULTIES.map(({ id, label, size }) => (
+                    {DIFFICULTIES.map(({ id, label, cols, rows }) => (
                         <button
                             key={id}
                             type="button"
                             className={difficulty === id ? styles.active : ""}
                             disabled={difficulty === id}
-                            onClick={() => setDifficulty(id)}
+                            onClick={() => changeDifficulty(id)}
                         >
                             <strong>{label}</strong>
-                            <span>{size}</span>
+                            <span>
+                                {cols} x {rows}
+                            </span>
                         </button>
                     ))}
                 </div>
+
                 <div className={styles.actions}>
                     <button type="button">
                         <Settings size={16} />
                         Settings
                     </button>
-                    <button type="button">
+                    <button type="button" onClick={restart} disabled={!started}>
                         <RotateCw size={16} />
                         Restart
                     </button>

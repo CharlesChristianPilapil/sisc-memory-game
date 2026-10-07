@@ -1,7 +1,12 @@
 import { PlayingCards } from "lucide-react";
 import styles from "./Header.module.scss";
+import { useGame } from "../../hooks/useGame";
 
 const Header = () => {
+    const { bestScore } = useGame();
+
+    const best = bestScore?.moves ?? "---";
+
     return (
         <header className={styles.container}>
             <div className={styles.content}>
@@ -16,9 +21,10 @@ const Header = () => {
 
             <div className={styles.best}>
                 <p>PERSONAL BEST</p>
-                <strong> ---</strong>
+                <strong>{best}</strong>
             </div>
         </header>
     );
 };
+
 export default Header;
